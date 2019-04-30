@@ -2,7 +2,6 @@ package script;
 
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
-import script.listener.JesusRecorder;
 
 import java.awt.*;
 import java.util.List;

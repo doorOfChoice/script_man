@@ -1,7 +1,11 @@
-package script.listener;
+package script;
 
 import script.CommonEvent;
 import script.EventStorage;
+import script.listener.KeyBoardListener;
+import script.listener.MouseEventListener;
+import script.listener.MouseMotionListener;
+import script.listener.MouseWheelListener;
 
 import java.awt.*;
 import java.util.List;
