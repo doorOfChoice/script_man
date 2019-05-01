@@ -1,13 +1,16 @@
 package script;
 
-import script.CommonEvent;
-import script.EventStorage;
+import com.alibaba.fastjson.JSON;
+import script.callback.KeyCallback;
 import script.listener.KeyBoardListener;
 import script.listener.MouseEventListener;
 import script.listener.MouseMotionListener;
 import script.listener.MouseWheelListener;
 
 import java.awt.*;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -22,7 +25,6 @@ public class JesusRecorder {
     private MouseWheelListener mouseWheelListener;
 
     private KeyBoardListener keyBoardListener;
-
 
     private EventStorage storage = new EventStorage();
 
@@ -45,8 +47,14 @@ public class JesusRecorder {
     }
 
     public KeyBoardListener getKeyBoardListener() {
-        if (keyBoardListener == null)
+        return getKeyBoardListener(null);
+    }
+
+    public KeyBoardListener getKeyBoardListener(KeyCallback func) {
+        if (keyBoardListener == null) {
             keyBoardListener = new KeyBoardListener(robot, storage);
+            keyBoardListener.setCallback(func);
+        }
         return keyBoardListener;
     }
 
@@ -58,6 +66,17 @@ public class JesusRecorder {
 
     public List<CommonEvent> getEvents() {
         return storage.getEvents();
+    }
+
+    public void saveEvents(String filename) {
+        String jsonString = JSON.toJSONString(getEvents());
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
+            writer.write(jsonString);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void reset() {

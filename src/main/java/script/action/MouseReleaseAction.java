@@ -1,43 +1,60 @@
 package script.action;
 
+import script.enums.ActionEnum;
 import script.enums.MouseButton;
 
 import java.awt.*;
+import java.io.Serializable;
 
 /**
  * 鼠标释放行为
  * Created By Dawndevil On 2019/4/30
  */
-public class MouseReleaseAction implements CommonAction {
-    private Robot robot;
-    private MouseButton mouseButton;
+public class MouseReleaseAction extends AbstractAction implements Serializable {
+    private int type = ActionEnum.MOUSE_RELEASE.getCode();
+    private int robotCode;
     private Point point;
 
-    public MouseReleaseAction(Robot robot, Point point, MouseButton mouseButton) {
-        this.robot = robot;
-        this.mouseButton = mouseButton;
+    public MouseReleaseAction() {
+    }
+
+    public MouseReleaseAction(Robot robot, Point point, int robotCode) {
+        super(robot);
+        this.robotCode = robotCode;
         this.point = point;
     }
 
-    public Robot getRobot() {
-        return robot;
+    public int getType() {
+        return type;
     }
 
-    public MouseButton getMouseButton() {
-        return mouseButton;
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public int getRobotCode() {
+        return robotCode;
+    }
+
+    public void setRobotCode(int robotCode) {
+        this.robotCode = robotCode;
     }
 
     public Point getPoint() {
         return point;
     }
 
+    public void setPoint(Point point) {
+        this.point = point;
+    }
+
     @Override
     public void action() {
-        robot.mouseRelease(mouseButton.getRobotCode());
+        robot.mouseRelease(robotCode);
     }
 
     @Override
     public String toString() {
-        return "释放" + mouseButton.getName();
+        return "释放";
     }
 }

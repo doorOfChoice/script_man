@@ -3,7 +3,6 @@ package script.listener;
 
 import org.jnativehook.mouse.NativeMouseEvent;
 import org.jnativehook.mouse.NativeMouseListener;
-import script.CommonEvent;
 import script.EventStorage;
 import script.action.MousePressAction;
 import script.action.MouseReleaseAction;
@@ -31,7 +30,7 @@ public class MouseEventListener extends AbstractListener implements NativeMouseL
     public void nativeMousePressed(NativeMouseEvent nativeMouseEvent) {
         MouseButton btn = MouseButton.findByNativeCode(nativeMouseEvent.getButton());
         Point point = MouseInfo.getPointerInfo().getLocation();
-        prevPress = new MousePressAction(robot, point, btn);
+        prevPress = new MousePressAction(robot, point, btn.getRobotCode());
         storage.addAction(prevPress);
     }
 
@@ -39,10 +38,9 @@ public class MouseEventListener extends AbstractListener implements NativeMouseL
     public void nativeMouseReleased(NativeMouseEvent nativeMouseEvent) {
         MouseButton btn = MouseButton.findByNativeCode(nativeMouseEvent.getButton());
         Point point = MouseInfo.getPointerInfo().getLocation();
-        MouseReleaseAction action = new MouseReleaseAction(robot, point, btn);
-        CommonEvent event = storage.generateAction(action);
+        MouseReleaseAction action = new MouseReleaseAction(robot, point, btn.getRobotCode());
         if (prevPress != null) {
-            prevPress.setReleaseAction(action, event.getInterval());
+            prevPress.setMouseReleaseAction(action);
             prevPress = null;
         }
     }

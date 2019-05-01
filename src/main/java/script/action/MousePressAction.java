@@ -1,46 +1,64 @@
 package script.action;
 
-import script.enums.MouseButton;
+import script.enums.ActionEnum;
 
 import java.awt.*;
+import java.io.Serializable;
 
 /**
  * 鼠标按下行为
  * Created By Dawndevil On 2019/4/29
  */
-public class MousePressAction implements CommonAction {
-    private Robot robot;
-    private MouseButton mouseButton;
+public class MousePressAction extends AbstractAction implements Serializable {
+    private int type = ActionEnum.MOUSE_PRESS.getCode();
+    private int robotCode;
     private Point point;
     private MouseReleaseAction mouseReleaseAction;
-    private long interval = 0;
 
-    public MousePressAction(Robot robot, Point point, MouseButton mouseButton) {
-        this.robot = robot;
-        this.mouseButton = mouseButton;
+    public MousePressAction() {
+    }
+
+    public MousePressAction(Robot robot, Point point, int robotCode) {
+        super(robot);
+        this.robotCode = robotCode;
         this.point = point;
     }
 
-    public void setReleaseAction(MouseReleaseAction mouseReleaseAction, long interval) {
-        this.mouseReleaseAction = mouseReleaseAction;
-        this.interval = interval;
+    public int getType() {
+        return type;
     }
 
-    public Robot getRobot() {
-        return robot;
+    public void setType(int type) {
+        this.type = type;
     }
 
-    public MouseButton getMouseButton() {
-        return mouseButton;
+    public int getRobotCode() {
+        return robotCode;
+    }
+
+    public void setRobotCode(int robotCode) {
+        this.robotCode = robotCode;
     }
 
     public Point getPoint() {
         return point;
     }
 
+    public void setPoint(Point point) {
+        this.point = point;
+    }
+
+    public MouseReleaseAction getMouseReleaseAction() {
+        return mouseReleaseAction;
+    }
+
+    public void setMouseReleaseAction(MouseReleaseAction mouseReleaseAction) {
+        this.mouseReleaseAction = mouseReleaseAction;
+    }
+
     @Override
     public void action() {
-        robot.mousePress(mouseButton.getRobotCode());
+        robot.mousePress(robotCode);
         if (mouseReleaseAction != null) {
             if (!point.equals(mouseReleaseAction.getPoint())) {
                 robot.delay(10);
@@ -50,12 +68,12 @@ public class MousePressAction implements CommonAction {
                 );
                 robot.delay(10);
             }
-            robot.mouseRelease(mouseReleaseAction.getMouseButton().getRobotCode());
+            robot.mouseRelease(mouseReleaseAction.getRobotCode());
         }
     }
 
     @Override
     public String toString() {
-        return "按下" + mouseButton.getName();
+        return "按下";
     }
 }

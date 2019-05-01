@@ -6,6 +6,8 @@ import org.jnativehook.keyboard.NativeKeyListener;
 import script.EventStorage;
 import script.action.KeyPressAction;
 import script.action.KeyReleaseAction;
+import script.callback.KeyCallback;
+import script.enums.ActionEnum;
 
 import java.awt.*;
 import java.awt.event.InputEvent;
@@ -17,8 +19,15 @@ import java.awt.event.KeyEvent;
  */
 public class KeyBoardListener extends AbstractListener implements NativeKeyListener {
 
+
     public KeyBoardListener(Robot robot, EventStorage storage) {
         super(robot, storage);
+    }
+
+    public KeyCallback func;
+
+    public void setCallback(KeyCallback func) {
+        this.func = func;
     }
 
     @Override
@@ -29,6 +38,11 @@ public class KeyBoardListener extends AbstractListener implements NativeKeyListe
     @Override
     public void nativeKeyPressed(NativeKeyEvent nativeKeyEvent) {
         int keyCode = getJavaKeyCode(nativeKeyEvent);
+        if(func != null){
+            if (!func.callback(ActionEnum.KEY_PRESS, nativeKeyEvent.getKeyCode(), keyCode)) {
+                return;
+            }
+        }
         KeyPressAction keyPressAction = new KeyPressAction(robot, keyCode);
         storage.addAction(keyPressAction);
     }
@@ -36,6 +50,11 @@ public class KeyBoardListener extends AbstractListener implements NativeKeyListe
     @Override
     public void nativeKeyReleased(NativeKeyEvent nativeKeyEvent) {
         int keyCode = getJavaKeyCode(nativeKeyEvent);
+        if(func != null) {
+            if (!func.callback(ActionEnum.KEY_RELEASE, nativeKeyEvent.getKeyCode(), keyCode)) {
+                return;
+            }
+        }
         KeyReleaseAction keyReleaseAction = new KeyReleaseAction(robot, keyCode);
         storage.addAction(keyReleaseAction);
     }

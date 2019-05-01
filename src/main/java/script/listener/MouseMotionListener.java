@@ -3,7 +3,7 @@ package script.listener;
 import org.jnativehook.mouse.NativeMouseEvent;
 import org.jnativehook.mouse.NativeMouseMotionListener;
 import script.EventStorage;
-import script.action.CommonAction;
+import script.action.AbstractAction;
 import script.action.MouseMoveAction;
 
 import java.awt.*;
@@ -20,7 +20,7 @@ public class MouseMotionListener extends AbstractListener implements NativeMouse
     @Override
     public void nativeMouseMoved(NativeMouseEvent nativeMouseEvent) {
         Point point = MouseInfo.getPointerInfo().getLocation();
-        CommonAction action = new MouseMoveAction(robot, point);
+        AbstractAction action = new MouseMoveAction(robot, point);
         storage.addAction(action);
     }
 

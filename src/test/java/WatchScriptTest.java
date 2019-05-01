@@ -1,22 +1,18 @@
-import org.jnativehook.NativeHookException;
 import script.WatchScript;
-
-import java.awt.*;
 
 public class WatchScriptTest {
     public static void main(String[] args) {
         try {
             WatchScript watchScript = new WatchScript();
             watchScript.closeLogger();
-            watchScript.record(5000);
-            watchScript.play();
+//            watchScript.record(5000);
+//            watchScript.saveScript("script.smf");
+//            watchScript.play();
+            watchScript.loadScript("script.smf", "one");
+            watchScript.play("one");
             watchScript.close();
-        } catch (AWTException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (NativeHookException e) {
-            System.out.println("请打开本地运行权限");
         }
     }
 }

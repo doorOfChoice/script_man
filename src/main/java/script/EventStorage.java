@@ -1,6 +1,6 @@
 package script;
 
-import script.action.CommonAction;
+import script.action.AbstractAction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ public class EventStorage {
      * @param action 事件行为
      * @return  事件
      */
-    public CommonEvent generateAction(CommonAction action) {
+    public CommonEvent generateAction(AbstractAction action) {
         long curTime = System.currentTimeMillis();
         long interval = curTime - prevTime;
         CommonEvent event = new CommonEvent(action, interval);
@@ -34,7 +34,7 @@ public class EventStorage {
      * 添加action，并且自动生成事件行为
      * @param action
      */
-    public void addAction(CommonAction action) {
+    public void addAction(AbstractAction action) {
         long curTime = System.currentTimeMillis();
         long interval = curTime - prevTime;
         events.add(new CommonEvent(action, interval));
