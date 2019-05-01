@@ -9,10 +9,10 @@ public class CommanderParam {
     @Parameter(names = {"--out-file", "-o"}, description = "保存的文件名")
     private String outFile = null;
 
-    @Parameter(names = {"-m"}, description = "禁止监听鼠标")
+    @Parameter(names = {"-m"}, description = "是否监听鼠标")
     private boolean listenMouse = true;
 
-    @Parameter(names = {"-k"}, description = "禁止监听键盘")
+    @Parameter(names = {"-k"}, description = "是否监听键盘")
     private boolean listenKey = true;
 
     @Parameter(names = {"-p"}, description = "播放脚本")
