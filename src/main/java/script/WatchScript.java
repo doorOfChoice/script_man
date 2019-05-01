@@ -95,8 +95,9 @@ public class WatchScript {
                 } catch (NativeHookException e) {
                     System.out.println("已经中断录制");
                 }
+                return false;
             }
-            return false;
+            return true;
         }
     }
 
