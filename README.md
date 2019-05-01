@@ -29,10 +29,10 @@
 
       
 # 录制并且播放
-java -jar script_man.jar -p
+java -jar scriptman.jar -p
 
 # 只监听鼠标
-java -jar script_man.jar -k -p
+java -jar scriptman.jar -k -p
 ```
 
 保存文件请你smf为后缀，录制过程中可按Esc提前结束录制
